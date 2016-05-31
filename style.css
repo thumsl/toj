@@ -1,0 +1,48 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+header {
+	font-size: 11px;
+	text-align: center;
+	width: 1000px;
+	height: auto;
+	margin: 0 auto;
+}
+header a {
+	float: right;
+	margin-right: 3px;
+}
+nav {
+	background: #EAEAEA;
+	text-transform: uppercase;
+	font-size:16px;
+	text-align: center;
+	width: 1000px;
+	height: 30px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	line-height: 30px;
+}
+nav a {margin: 5 5; text-decoration: none; color: blue; margin-right: 10px;}
+nav a:hover {font-weight: bold;}
+section {width: 1000px; weight: auto; margin: 0 auto;}
+section table {width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;}
+section td {border-bottom: 1px solid #ddd}
+section td a {display: block;   text-decoration: inherit; color:#000;}
+section tr:nth-child(even) {background-color: #f2f2f2; }
+section tr:hover {background-color: #3385ff}
+section th {background-color: #3366ff; color: #fff; text-decoration: none;}
+section form {width: 832px;	height: auto; margin: 20 auto;}
+section label {display: inline-block; width: 240px; text-align: left; margin: 0 10px 5px 0;}
+section input {width: 560px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA;font-weight: bold}
+section input:focus {outline: none; background-color: #FFF;}
+section select {width: 560px; padding: 4px 20px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA; font-weight: bold}
+section button {display: inline-block; width: 100px; heigth: auto; float:right; margin-top: 10px; margin-right:20px;}
+section textarea {margin: 10 10 10 0; padding-right: 100; width: 560px; height: 300px;}
+legend {text-align: center; width: 100%; font-size: 14px;}
+h1 {margin: 0 auto; padding:0px; text-align: center;}
+p {margin: 0px; padding:0px; text-align: right;}
+article {width: 700px; height: 100px; border: 1px dashed black; padding:0px; margin: 0 auto;}
