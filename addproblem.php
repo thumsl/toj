@@ -18,9 +18,9 @@
 
 <body>
 
-<form id="addproblem" method="post">
+<form id="addproblem" method="post" enctype="multipart/form-data">
 	<label for="title">Titulo</label>
-	<input id="title" name="title" type="text" placeholder="Hello World" class="form-control input-md" required><br>
+	<input id="title" name="title" type="text" placeholder="Hello World" class="form-control input-md" required>
 	<label for="categoria">Categoria</label>
 	<select id="categoria" name="categoria">
 		<option selected value="iniciante">Iniciante</option>
@@ -45,8 +45,9 @@
 		<option value="9">9</option>
 		<option value="10">10</option>
 	</select>
+
 	<label for="file">Output File</label>
-	<input type="file" name="file" id="file">
+	<input type="file" name="fileToUpload" id="fileToUpload">
 	<button type="submit" form="addproblem" name="submit" value="submit">Create</button>
 </form>
 
@@ -54,17 +55,35 @@
 	<?php
 		if(isset($_POST['submit'])) { //check if form was submitted
 			if ($_POST['title'] != "" && $_POST['categoria'] != "" && $_POST['descricao'] != "" && $_POST['dificuldade'] != "") {
-				// TODO: verify input 'dificuldade', has to be between 1-10
 				$id = mt_rand(0, 2147483647);
+				$ok = true;
+
+				// output file
+                $target = '/media/judge/output/'.$id.".output";
+                echo "target = ".$target."<br>";
+                if ($_FILES["fileToUpload"]["size"] > 0) {
+					if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target))
+					    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.<br>";
+					else {
+						$ok = false;
+					    echo "Sorry, there was an error uploading your file.<br>";
+					}
+                }
+                else {
+                	$ok = false;
+                	echo "ERROR: The output file can't be empty<br>";
+                }
+
+				// TODO: verify input 'dificuldade', has to be between 1-10
 				$insert = 
 					"INSERT INTO problemas (\"codProb\", titulo, \"nivelDificuldade\", \"refCat\", \"refAutor\", \"descricao\")
 					VALUES ('".$id."', '".$_POST['title']."', '".$_POST['dificuldade']."', '".$_POST['categoria']."', '".$_SESSION['id']."', '".$_POST['descricao']."');";
 				echo "Insert query: <br> ".$insert."<br><br>";
+				
 				// TODO: SQL Injection protection
-
 				$result = pg_query($con, $insert);
 
-				if ($result) {
+				if ($result && $ok) {
 					$dir = 'problems';
 
 					 // create new directory with 744 permissions if it does not exist yet
@@ -74,14 +93,13 @@
 					     mkdir ($dir, 0777);
 					 }
 
+					// creates the html file for the problem
 					$file_name = $dir."/".$id.".html";
 					$file = fopen($file_name, "w");
 					$autor_query = "SELECT nome FROM usuarios WHERE \"codUser\" = ".$_SESSION['id'];
 					$autor  = pg_fetch_row(pg_query($con, $autor_query))[0];
 					$content = "<article><h1>".$_POST['title']."</h1><br><p><small>".$autor."</p></small><br>".$_POST['descricao']."</article>";
-					//fwrite($file, $content);
 					fwrite($file, $content);
-					echo $id."<br>";
 					echo "Problema criado com sucesso.<br>";
 				}
 				else
