@@ -46,39 +46,47 @@
 		<option value="10">10</option>
 	</select>
 
-	<label for="file">Output File</label>
-	<input type="file" name="fileToUpload" id="fileToUpload">
+	<label for="outputFile">Output File</label>
+	<input type="file" name="outputFile" ID="outputFile">
+	<label for="inputFile">Input File</label>
+	<input type="file" name="inputFile" ID="inputFile">
 	<button type="submit" form="addproblem" name="submit" value="submit">Create</button>
 </form>
 
 <legend>
 	<?php
 		if(isset($_POST['submit'])) { //check if form was submitted
-			if ($_POST['title'] != "" && $_POST['categoria'] != "" && $_POST['descricao'] != "" && $_POST['dificuldade'] != "") {
+			if ($_POST['title'] != "" && $_POST['categoria'] != "" && $_POST['descricao'] != "" && $_POST['dificuldade'] != "" && $_FILES["outputFile"]["size"] > 0 && $_FILES['inputFile']['size'] > 0) {
 				$id = mt_rand(0, 2147483647);
 				$ok = true;
 
 				// output file
-                $target = '/media/judge/output/'.$id.".output";
-                echo "target = ".$target."<br>";
-                if ($_FILES["fileToUpload"]["size"] > 0) {
-					if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target))
-					    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.<br>";
-					else {
-						$ok = false;
-					    echo "Sorry, there was an error uploading your file.<br>";
-					}
-                }
-                else {
-                	$ok = false;
-                	echo "ERROR: The output file can't be empty<br>";
-                }
+				$target = '/media/judge/output/'.$id.".output";
+        		echo "[DEBUG] output target = ".$target;
+
+				if (move_uploaded_file($_FILES["outputFile"]["tmp_name"], $target))
+				    echo " was upload sucessfully.<br>";
+				else {
+					$ok = false;
+					echo "Sorry, there was an error uploading your file.<br>";
+				}
+
+				//input file
+				$target = '/media/judge/input/'.$id.'.input';
+        		echo "[DEBUG] input target = ".$target; 
+
+				if (move_uploaded_file($_FILES['inputFile']['tmp_name'], $target))
+				    echo " was upload sucessfully.<br>";
+				else {
+					$ok = false;
+					echo "Sorry, there was an error uploading your file.<br>";
+				}
 
 				// TODO: verify input 'dificuldade', has to be between 1-10
 				$insert = 
 					"INSERT INTO problemas (\"codProb\", titulo, \"nivelDificuldade\", \"refCat\", \"refAutor\", \"descricao\")
 					VALUES ('".$id."', '".$_POST['title']."', '".$_POST['dificuldade']."', '".$_POST['categoria']."', '".$_SESSION['id']."', '".$_POST['descricao']."');";
-				echo "Insert query: <br> ".$insert."<br><br>";
+				echo "Insert query = ".$insert."<br>";
 				
 				// TODO: SQL Injection protection
 				$result = pg_query($con, $insert);
@@ -100,7 +108,7 @@
 					$autor  = pg_fetch_row(pg_query($con, $autor_query))[0];
 					$content = "<article><h1>".$_POST['title']."</h1><br><p><small>".$autor."</p></small><br>".$_POST['descricao']."</article>";
 					fwrite($file, $content);
-					echo "Problema criado com sucesso.<br>";
+					echo "<b>Problema criado com sucesso.</b><br>";
 				}
 				else
 					echo "There was a problem adding the problem to the database, please try again later.<br>";
