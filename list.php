@@ -15,34 +15,26 @@
 
 <table style="width:100%">
 <tr>
-	<th>Nome</th>
+	<th>Name</th>
 	<th>E-mail</th>
-	<th>Universidade</th>
-	<th>Pais</th>
+	<th>University</th>
+	<th>Country</th>
 </tr>
 
 <?php
-	$result = pg_query($con, "SELECT nome, email, universidade, pais FROM usuarios");
+	$result = pg_query($con, "SELECT users.name, users.email, university.name, country.code, country.name, university.abbrev FROM users, country, university WHERE fk_uni = university.id AND fk_country = country.id;");
 	if (!$result) {
 		echo "An error occurred.\n";
 		exit;
 	}
 
 	while ($row = pg_fetch_row($result)) {
-		echo "<tr> <td>$row[0]</td> <td>$row[1]</td> <td>$row[2]</td> <td>";
-		switch($row[3]) {
-			case "br":
-				echo "<img src='images/flags/Brazil.png' alt='Brasil' style='width:24px;height:24px;'>";
-				break;
-			case 'ar':
-				echo "<img src='images/flags/Argentina.png' alt='Argentina' style='width:24px;height:24px;'>";
-				break;
-			case 'us':
-				echo "<img src='images/flags/United-States.png' alt='USA' style='width:24px;height:24px;'>";
-				break;
-		}
-		echo "</td></tr>";
+		echo 	"<tr><td>$row[0]</td>
+				 <td>$row[1]</td>
+				 <td>$row[2] ($row[5])</td>
+				 <td><img src='images/flags/".$row[3].".png' alt='".$row[4]."' style='width:24px;height:24px;'></td>";
 	}
+	echo "</tr>";
 ?>
 </table>
 

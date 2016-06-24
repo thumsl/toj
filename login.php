@@ -33,7 +33,7 @@
 	<?php
 		if(isset($_POST['login'])) { //check if form was submitted
 			if ($_POST['email'] != "" && $_POST['password'] != "") {
-				$sql = "SELECT senha, \"refCatUser\", \"codUser\" FROM usuarios WHERE email = '".$_POST['email']."';";
+				$sql = "SELECT id, password, fk_type FROM users WHERE email = '".$_POST['email']."';";
 				$result = pg_query($con, $sql);
 
 				if (pg_num_rows($result) == 0) {
@@ -42,10 +42,10 @@
 				}
 				else {
 					$row = pg_fetch_row($result);
-					if (password_verify($_POST['password'], $row[0])) {
+					if (password_verify($_POST['password'], $row[1])) {
+						$_SESSION['id'] = $row[0];
 						$_SESSION['logged'] = 1;
-						$_SESSION['permission'] = $row[1];
-						$_SESSION['id'] = $row[2];
+						$_SESSION['permission'] = $row[2];
 						header("Location: ?option=account");
 					}
 					else

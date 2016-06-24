@@ -28,23 +28,27 @@
 	<?php
 		if(isset($_POST['submit'])) { //check if form was submitted
 			if ($_POST['email'] != "") {
-				$sql = "SELECT * FROM usuarios WHERE email = '" . $_POST['email'] . "'";
+				$sql = "SELECT * FROM users WHERE UPPER(email) = UPPER('" . $_POST['email'] . "');";
 				$result = pg_query($con, $sql);
-				if (pg_num_rows($result) == 0) {
-					echo "<i>" . $_POST['email'] . "</i> is not registered.<br>";
-					exit;
-				}
+				if (!$result)
+					echo "Sorry, you can't do that right now. Please try again later.<br>";
 				else {
-					$delete = "DELETE FROM usuarios WHERE email = '".$_POST['email']."';";
-					echo "Delete query: <br> ".$delete."<br><br>";
+					if (pg_num_rows($result) == 0) {
+						echo "<i>" . $_POST['email'] . "</i> is not registered.<br>";
+						exit;
+					}
+					else {
+						$delete = "DELETE FROM users WHERE UPPER(email) = UPPER('".$_POST['email']."');";
+						echo "Delete query: <br> ".$delete."<br><br>";
 
-					$result = pg_query($con, $delete);
-					
-					if (!$result)
-						echo "Failed to remove user <i>".$_POST['email']."</i>. Please try again later.<br><br>";
-					else
-						echo "User <i>".$_POST['email']."</i> has been deleted.";
-					exit;
+						$result = pg_query($con, $delete);
+						
+						if (!$result)
+							echo "Failed to remove user <i>".$_POST['email']."</i>. Please try again later.<br><br>";
+						else
+							echo "User <i>".$_POST['email']."</i> has been deleted.";
+						exit;
+					}
 				}
 			}
 			else {

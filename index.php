@@ -48,12 +48,12 @@
 	}
 ?>
 <header>
+	<?php include("connect.php"); ?>
 	<a href="?option=<?php echo $action; ?>"><?php echo $session_status; ?></a>
 	<?php 
 		if ($_SESSION['logged'] == 0)
 			echo "<a href='?option=insert'>Register</a><br>";
 	?>
-	<?php include("connect.php"); ?>
 	<h1>Online Judge</h1>
 </header>
 

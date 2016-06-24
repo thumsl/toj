@@ -26,20 +26,31 @@
 	<label for="password">Senha</label>
 	<input id="password" name="password" type="password" class="form-control input-md" required><br>
 	<label for="universidade">Universidade</label>
-	<input id="universidade" name="universidade" type="text" placeholder="UTFPR" class="form-control input-md"><br>
+	<select id="universidade" name="universidade">
+		<?php
+			$result = pg_query($con, "SELECT id, abbrev FROM university ORDER BY abbrev");
+			while ($row = pg_fetch_row($result)) {
+				echo "<option value='".$row[0]."'>".$row[1]."</option>";
+			}
+		?>
+	</select>	
 	<label for="country">Pa&iacute;s</label>
 	<select id="country" name="country">
-		<option value="ar">Argentina</option>
-		<option selected value="br">Brasil</option>
-		<option value="us">United States of America</option>
+		<?php
+			$result = pg_query($con, "SELECT id, name FROM country ORDER BY name");
+			while ($row = pg_fetch_row($result)) {
+				echo "<option value='".$row[0]."'>".$row[1]."</option>";
+			}
+		?>
 	</select>
 	<button type="submit" form="register" name="submit" value="submit">Register</button>
 </form>
 
 <legend>
 	<?php
-		if(isset($_POST['submit'])) { //check if form was submitted
-			if ($_POST['name'] != "" && $_POST['email'] != "" && $_POST['password'] != "") {
+		// TODO: fetch universities from databse
+		if(isset($_POST['submit'])) {
+			if ($_POST['name'] != "" && $_POST['email'] != "" && $_POST['password'] != "") { 
 				$sql = "SELECT * FROM usuarios WHERE email = '" . $_POST['email'] . "'";
 				$result = pg_query($con, $sql);
 				if (pg_num_rows($result) > 0) {
@@ -49,31 +60,15 @@
 				else {
 					$id = mt_rand(0, 2147483647);
 					$hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-					$escaped = pg_escape_string('codUser');
-					$insert = 
-						"INSERT INTO usuarios (\"codUser\", nome, email, senha, universidade, pais)
-						VALUES ('".$id."', '".$_POST['name']."', '".$_POST['email']."', '".$hash."', '".
-						$_POST['universidade']."', '".$_POST['country']."');";
-					echo "Insert query: <br> ".$insert."<br><br>";
+					$insert = "INSERT INTO users VALUES (".$id.", '".$_POST['name']."', '".$_POST['email']."', '".$hash."', ".$_POST['country'].", ".$_POST['universidade'].", 0);"; //".$_POST['universidade']."
+					echo "Insert query: <br> ".$insert."<br>";
 
 					$result = pg_query($con, $insert);
-					$tries = 0;
 
-					while (!$result && $tries < 5) {
-						$id = mt_rand(0, 2147483647);
-						$insert = 
-							"INSERT INTO usuarios (\"codUser\", nome, email, senha, universidade, pais)
-							VALUES ('".$id."', '".$_POST['name']."', '".$_POST['email']."', '".$hash."', '".
-							$_POST['universidade']."', '".$_POST['country']."');";
-
-						$result = pg_query($con, $insert);
-						$tries++;
-						echo $tries;
-					}
 					if ($result)
 						echo "Usuario cadastrado com sucesso.<br>";
 					else
-						echo "There was a problem adding the user to the database, please try again later.<br>";
+						echo "There was a problem adding the user to the database, please try again.<br>";
 					exit;
 				}
 			}

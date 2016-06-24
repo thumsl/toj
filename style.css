@@ -39,7 +39,7 @@ section form {width: 832px;	height: auto; margin: 20 auto;}
 section label {display: inline-block; width: 240px; text-align: left; margin: 0 10px 5px 0;}
 section input {width: 560px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA;font-weight: bold}
 section input:focus {outline: none; background-color: #FFF;}
-section select {width: 560px; padding: 4px 20px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA; font-weight: bold}
+section select {width: 560px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA; font-weight: bold}
 section button {display: inline-block; width: 100px; heigth: auto; float:right; margin-top: 10px; margin-right:20px;}
 section textarea {margin: 10 10 10 0; padding-right: 100; width: 560px; height: 300px;}
 legend {text-align: center; width: 100%; font-size: 14px;}

@@ -25,7 +25,9 @@
 </script>
 
 <?php
-	$result = pg_query($con, "SELECT titulo, \"refCat\", \"refAutor\", \"nivelDificuldade\", \"codProb\", descricao FROM problemas");
+	$query = "SELECT problems.id, problems.name, problems.level, problems.fk_user, problemType.id, problemType.name, users.name
+		FROM problems, problemType, users WHERE problems.fk_type = problemType.id AND problems.fk_user = users.id;";
+	$result = pg_query($con, $query);
 	if (!$result) {
 		echo "An error occurred.\n";
 		exit;
@@ -45,29 +47,14 @@
 
 		<?php
 		while ($row = pg_fetch_row($result)) {
-			switch($row[1]) {
-				case 'inic':
-					$categoria = "Iniciante";
-					break;
-				case 'str':
-					$categoria = "Strings";
-					break;
-				case 'ed':
-					$categoria = "Estruturas";
-					break;
-				case 'graph':
-					$categoria = "Grafos";
-					break;
-				case 'math':
-					$categoria = "Matematica";
-					break;
-				}
 			// TODO: check if user still exists
-			$url = "?problem=".$row[4];
-			$nome_autor = pg_fetch_row(pg_query($con, "SELECT nome FROM usuarios WHERE \"codUser\" = ". $row[2]));
-			$resolvido = pg_num_rows(pg_query($con, "SELECT * FROM \"problemUser\" WHERE \"codProb\" = ".$row[4]));
-			echo "<tr> <td><a href='".$url."'>".$row[0]."</a></td> <td><a href='".$url."'>".$categoria."</a></td>
-				<td><a href='".$url."''>".$nome_autor[0]."</a></td> <td><a href='".$url."'>".$row[3]."</a></td> 
+			$url = "?problem=".$row[0];
+			$resolvido = pg_num_rows(pg_query($con, "SELECT * FROM solutions WHERE id = ".$row[0]." AND fk_status = 1;"));
+			echo "
+			<tr><td><a href='".$url."'>".$row[1]."</a></td>
+				<td><a href='".$url."'>".$row[5]."</a></td>
+				<td><a href='".$url."''>".$row[6]."</a></td>
+				<td><a href='".$url."'>".$row[2]."</a></td> 
 				<td><a href='".$url."'>".$resolvido."</a></td></tr>";
 		}
 	}

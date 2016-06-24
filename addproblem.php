@@ -13,26 +13,27 @@
 
 <html>
 <head>
-	<title>Register</title>
+	<title>Create Problem</title>
 </head>
 
 <body>
 
 <form id="addproblem" method="post" enctype="multipart/form-data">
-	<label for="title">Titulo</label>
+	<label for="title">Title</label>
 	<input id="title" name="title" type="text" placeholder="Hello World" class="form-control input-md" required>
-	<label for="categoria">Categoria</label>
+	<label for="categoria">Type</label>
 	<select id="categoria" name="categoria">
-		<option selected value="iniciante">Iniciante</option>
-		<option value="ed">Estruturas</option>
-		<option value="str">Strings</option>
-		<option value="graph">Grafos</option>
-		<option value="math">Matematica</option>
-	</select><br>
-	<label for="descricao">Descricao:</label>
+		<?php
+			$result = pg_query($con, "SELECT id, name FROM problemType ORDER BY name");
+			while ($row = pg_fetch_row($result)) {
+				echo "<option value='".$row[0]."'>".$row[1]."</option>";
+			}
+		?>
+	</select>
+	<label for="descricao">Description:</label>
 	<textarea name="descricao"></textarea>
 
-	<label for="dificuldade">Dificuldade</label>
+	<label for="dificuldade">Level</label>
 	<select id="dificuldade" name="dificuldade">
 		<option selected value="1">1</option>
 		<option value="2">2</option>
@@ -45,11 +46,10 @@
 		<option value="9">9</option>
 		<option value="10">10</option>
 	</select>
-
-	<label for="outputFile">Output File</label>
-	<input type="file" name="outputFile" ID="outputFile">
 	<label for="inputFile">Input File</label>
 	<input type="file" name="inputFile" ID="inputFile">
+	<label for="outputFile">Output File</label>
+	<input type="file" name="outputFile" ID="outputFile">
 	<button type="submit" form="addproblem" name="submit" value="submit">Create</button>
 </form>
 
@@ -68,7 +68,7 @@
 				    echo " was upload sucessfully.<br>";
 				else {
 					$ok = false;
-					echo "Sorry, there was an error uploading your file.<br>";
+					echo "Sorry, there was an error uploading your file. Please try again.<br>";
 				}
 
 				//input file
@@ -79,17 +79,15 @@
 				    echo " was upload sucessfully.<br>";
 				else {
 					$ok = false;
-					echo "Sorry, there was an error uploading your file.<br>";
+					echo "Sorry, there was an error uploading your file. Please try again.<br>";
 				}
 
-				// TODO: verify input 'dificuldade', has to be between 1-10
-				$insert = 
-					"INSERT INTO problemas (\"codProb\", titulo, \"nivelDificuldade\", \"refCat\", \"refAutor\", \"descricao\")
-					VALUES ('".$id."', '".$_POST['title']."', '".$_POST['dificuldade']."', '".$_POST['categoria']."', '".$_SESSION['id']."', '".$_POST['descricao']."');";
-				echo "Insert query = ".$insert."<br>";
+				$query = 
+					"INSERT INTO problems VALUES (".$id.", '".$_POST['title']."', ".$_POST['dificuldade'].", '".$_POST['descricao']."', ".$_POST['categoria'].", ".$_SESSION['id'].");";
+				echo "Insert query = ".$query."<br>";
 				
 				// TODO: SQL Injection protection
-				$result = pg_query($con, $insert);
+				$result = pg_query($con, $query);
 
 				if ($result && $ok) {
 					$dir = 'problems';

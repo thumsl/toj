@@ -11,7 +11,7 @@
 	if ($_SESSION['logged'] == 0)
 		header("Location: ?option=login");
 	else {
-		echo "<legend>Your account's permission level is ".$_SESSION['permission']."<br>";
-		echo "Your account details will appear here.</legend><br>";
+		echo "Your account's permission level is ".$_SESSION['permission']."<br>";
+		echo "Your account details will appear here.<br>";
 	}
 ?>
