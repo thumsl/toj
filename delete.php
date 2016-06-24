@@ -18,6 +18,7 @@
 
 <body>
 
+<section>
 <form id="delete" method="post">
 	<label for="email">E-mail</label>
 	<input id="email" name="email" type="text" placeholder="nome@example.com" class="form-control input-md" required><br>
@@ -28,36 +29,35 @@
 	<?php
 		if(isset($_POST['submit'])) { //check if form was submitted
 			if ($_POST['email'] != "") {
-				$sql = "SELECT * FROM users WHERE UPPER(email) = UPPER('" . $_POST['email'] . "');";
-				$result = pg_query($con, $sql);
-				if (!$result)
+				$select = "SELECT * FROM users WHERE UPPER(email) = UPPER('" . $_POST['email'] . "');";
+				$result = pg_query($con, $select);
+				if (!$result) {
 					echo "Sorry, you can't do that right now. Please try again later.<br>";
+					exit(1);
+				}
 				else {
 					if (pg_num_rows($result) == 0) {
 						echo "<i>" . $_POST['email'] . "</i> is not registered.<br>";
-						exit;
 					}
 					else {
 						$delete = "DELETE FROM users WHERE UPPER(email) = UPPER('".$_POST['email']."');";
-						echo "Delete query: <br> ".$delete."<br><br>";
 
 						$result = pg_query($con, $delete);
 						
 						if (!$result)
-							echo "Failed to remove user <i>".$_POST['email']."</i>. Please try again later.<br><br>";
+							echo "Sorry, you can't do that right now. Please try again later.<br>";
 						else
 							echo "User <i>".$_POST['email']."</i> has been deleted.";
-						exit;
 					}
 				}
 			}
 			else {
 				echo "Please fill all required fields correctly.<br>";
-				exit;
+				exit(1);
 			}
+			echo "</legend></section><footer>$select<br>$delete</footer>";
 		}
 	?>
-</legend>
 
 </body>
 </html>

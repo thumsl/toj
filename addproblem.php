@@ -18,6 +18,7 @@
 
 <body>
 
+<section>
 <form id="addproblem" method="post" enctype="multipart/form-data">
 	<label for="title">Title</label>
 	<input id="title" name="title" type="text" placeholder="Hello World" class="form-control input-md" required>
@@ -62,7 +63,7 @@
 
 				// output file
 				$target = '/media/judge/output/'.$id.".output";
-        		echo "[DEBUG] output target = ".$target;
+        		//echo "[DEBUG] output target = ".$target;
 
 				if (move_uploaded_file($_FILES["outputFile"]["tmp_name"], $target))
 				    echo " was upload sucessfully.<br>";
@@ -73,7 +74,7 @@
 
 				//input file
 				$target = '/media/judge/input/'.$id.'.input';
-        		echo "[DEBUG] input target = ".$target; 
+        		//echo "[DEBUG] input target = ".$target; 
 
 				if (move_uploaded_file($_FILES['inputFile']['tmp_name'], $target))
 				    echo " was upload sucessfully.<br>";
@@ -84,7 +85,6 @@
 
 				$query = 
 					"INSERT INTO problems VALUES (".$id.", '".$_POST['title']."', ".$_POST['dificuldade'].", '".$_POST['descricao']."', ".$_POST['categoria'].", ".$_SESSION['id'].");";
-				echo "Insert query = ".$query."<br>";
 				
 				// TODO: SQL Injection protection
 				$result = pg_query($con, $query);
@@ -108,17 +108,18 @@
 					fwrite($file, $content);
 					echo "<b>Problema criado com sucesso.</b><br>";
 				}
-				else
+				else {
 					echo "There was a problem adding the problem to the database, please try again later.<br>";
-				exit;
+					exit(1);
+				}
 			}
 			else {
 				echo "Please fill all required fields correctly.<br>";
-				exit;
+				exit(1);
 			}
+			echo "</legend></section><footer>$query</footer>";
 		}
 	?>
-</legend>
 
 </body>
 </html>

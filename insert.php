@@ -18,6 +18,7 @@
 
 <body>
 
+<section>
 <form id="register" method="post">
 	<label for="name">Nome</label>
 	<input id="name" name="name" type="text" placeholder="Joao da Silva" class="form-control input-md" required><br>
@@ -28,7 +29,8 @@
 	<label for="universidade">Universidade</label>
 	<select id="universidade" name="universidade">
 		<?php
-			$result = pg_query($con, "SELECT id, abbrev FROM university ORDER BY abbrev");
+			$select = "SELECT id, abbrev FROM university ORDER BY abbrev";
+			$result = pg_query($con, $select);
 			while ($row = pg_fetch_row($result)) {
 				echo "<option value='".$row[0]."'>".$row[1]."</option>";
 			}
@@ -37,7 +39,8 @@
 	<label for="country">Pa&iacute;s</label>
 	<select id="country" name="country">
 		<?php
-			$result = pg_query($con, "SELECT id, name FROM country ORDER BY name");
+			$select2 = "SELECT id, name FROM country ORDER BY name";
+			$result = pg_query($con, $select2);
 			while ($row = pg_fetch_row($result)) {
 				echo "<option value='".$row[0]."'>".$row[1]."</option>";
 			}
@@ -48,20 +51,17 @@
 
 <legend>
 	<?php
-		// TODO: fetch universities from databse
 		if(isset($_POST['submit'])) {
 			if ($_POST['name'] != "" && $_POST['email'] != "" && $_POST['password'] != "") { 
-				$sql = "SELECT * FROM usuarios WHERE email = '" . $_POST['email'] . "'";
-				$result = pg_query($con, $sql);
+				$select3 = "SELECT * FROM usuarios WHERE email = UPPER('" . $_POST['email'] . "')";
+				$result = pg_query($con, $select3);
 				if (pg_num_rows($result) > 0) {
 					echo "<i>" . $_POST['email'] . "</i> is already registered.<br>";
-					exit;
 				}
 				else {
 					$id = mt_rand(0, 2147483647);
 					$hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 					$insert = "INSERT INTO users VALUES (".$id.", '".$_POST['name']."', '".$_POST['email']."', '".$hash."', ".$_POST['country'].", ".$_POST['universidade'].", 0);"; //".$_POST['universidade']."
-					echo "Insert query: <br> ".$insert."<br>";
 
 					$result = pg_query($con, $insert);
 
@@ -69,16 +69,16 @@
 						echo "Usuario cadastrado com sucesso.<br>";
 					else
 						echo "There was a problem adding the user to the database, please try again.<br>";
-					exit;
 				}
 			}
 			else {
 				echo "Please fill all required fields correctly.<br>";
-				exit;
+				exit(1);
 			}
+			echo "</legend></section><footer>$select<br>$select2<br>$select3<br>$insert</footer>";
 		}
 	?>
 </legend>
-
+</section>
 </body>
 </html>

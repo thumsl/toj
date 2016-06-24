@@ -10,8 +10,20 @@
 
 	if ($_SESSION['logged'] == 0)
 		header("Location: ?option=login");
-	else {
+?>
+
+<html>
+<head>
+	<title>Edit</title>
+</head>
+
+<body>
+
+<section>
+	<?php
 		echo "Your account's permission level is ".$_SESSION['permission']."<br>";
 		echo "Your account details will appear here.<br>";
-	}
-?>
+	?>
+</section>
+</body>
+</html>

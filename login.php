@@ -21,6 +21,7 @@
 
 <body>
 
+<section>
 <form id="login" method="post">
 	<label for="email">E-mail</label>
 	<input id="email" name="email" type="text" placeholder="nome@example.com" class="form-control input-md" required><br>
@@ -60,6 +61,7 @@
 		}
 	?>
 </legend>
+</section>
 
 </body>
 </html>

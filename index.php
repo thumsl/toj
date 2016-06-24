@@ -64,7 +64,6 @@
 	?>
 </nav>
 
-<section>
 <?php
 	if (isset($_GET['problem'])) {
 		include("problems/".$_GET['problem'].".html");
@@ -107,7 +106,6 @@
 		}
 	}
 ?>
-</section>
 
 </body>
 </html>

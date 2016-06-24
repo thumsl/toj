@@ -13,6 +13,7 @@
 
 <body>
 
+<section>
 <table style="width:100%">
 <tr>
 	<th>Name</th>
@@ -22,7 +23,8 @@
 </tr>
 
 <?php
-	$result = pg_query($con, "SELECT users.name, users.email, university.name, country.code, country.name, university.abbrev FROM users, country, university WHERE fk_uni = university.id AND fk_country = country.id;");
+	$query = "SELECT users.name, users.email, university.name, country.code, country.name, university.abbrev FROM users, country, university WHERE fk_uni = university.id AND fk_country = country.id ORDER BY users.name;";
+	$result = pg_query($con, $query);
 	if (!$result) {
 		echo "An error occurred.\n";
 		exit;
@@ -37,6 +39,11 @@
 	echo "</tr>";
 ?>
 </table>
+</section>
+
+<footer>
+	<?php echo "$query"; ?>
+</footer>
 
 </body>
 </html>
