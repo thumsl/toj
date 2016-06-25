@@ -5,10 +5,10 @@ body {
 }
 header {
 	font-size: 11px;
-	text-align: center;
 	width: 1000px;
 	height: auto;
 	margin: 0 auto;
+	position: fixed;
 }
 header a {
 	float: right;
@@ -53,6 +53,51 @@ section select {width: 560px; border: 1px solid #3366ff; border-radius: 2px; bac
 section button {display: inline-block; width: 100px; heigth: auto; float:right; margin-top: 10px; margin-right:20px;}
 section textarea {margin: 10 10 10 0; padding-right: 100; width: 560px; height: 300px;}
 legend {width: 100%; text-align: center; font-size: 14px;}
-h1 {margin: 0 auto; padding:0px; text-align: center;}
+h1 {margin: 0 auto; padding:5 5; text-align: center;}
 p {margin: 0px; padding:0px; text-align: right;}
 article {width: 700px; height: 100px; border: 1px dashed black; padding:0px; margin: 0 auto;}
+
+.dropbtn {
+    background-color: #EAEAEA;
+    color: blue;
+    height: 100%;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #EAEAEA;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #EAEAEA}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #C6C6C6;
+}

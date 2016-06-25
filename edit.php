@@ -49,7 +49,7 @@
 						echo "<i>" . $_POST['email'] . "</i> is not registered.<br>";
 					}
 					else {
-						$update = "UPDATE users  SET fk_type = ".$_POST['permission']." WHERE email = UPPER('".$_POST['email']."');";
+						$update = "UPDATE users  SET fk_type = ".$_POST['permission']." WHERE UPPER(email) = UPPER('".$_POST['email']."');";
 
 						$result = pg_query($con, $update);
 						

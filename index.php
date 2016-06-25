@@ -52,16 +52,127 @@
 	<a href="?option=<?php echo $action; ?>"><?php echo $session_status; ?></a>
 	<?php 
 		if ($_SESSION['logged'] == 0)
-			echo "<a href='?option=insert'>Register</a><br>";
+			echo "<a href='?option=insert'>Register</a>";
 	?>
-	<h1>Online Judge</h1>
 </header>
+
+<h1>Online Judge</h1>
 
 <nav>
 	<?php
-		foreach($option as $i)
-			echo "<a href='?option=".$i."' title='".$title[$i]."'>".$text[$i]."</a>";
+		if ($_SESSION['logged'] == 1) {
+			if ($_SESSION['permission'] == 0) {
+				// REGULAR
+				?>
+				<div class="dropdown">
+					<button class="dropbtn">USERS</button>
+					<div class="dropdown-content">
+						<a href="?option=list">LIST</a>
+						<a href="?option=ranking">RANKING</a>
+						<a href="?option=search">SEARCH</a>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="dropbtn">PROBLEMS</button>
+					<div class="dropdown-content">
+						<a href="?option=problems">LIST</a>
+						<a href="?option=submit">SUBMIT</a>
+						<a href="?option=submissions">SUBMISSIONS</a>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="dropbtn">ACCOUNT</button>
+					<div class="dropdown-content">
+						<a href="?option=account">PROFILE</a>
+						<a href="?option=logout">LOGOUT</a>
+					</div>
+				</div>
+				<?php
+			}
+			if ($_SESSION['permission'] == 1) {
+				// AUTHOR
+				?>
+				<div class="dropdown">
+					<button class="dropbtn">USERS</button>
+					<div class="dropdown-content">
+						<a href="?option=list">LIST</a>
+						<a href="?option=ranking">RANKING</a>
+						<a href="?option=search">SEARCH</a>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="dropbtn">PROBLEMS</button>
+					<div class="dropdown-content">
+						<a href="?option=problems">LIST</a>
+						<a href="?option=submit">SUBMIT</a>
+						<a href="?option=submissions">SUBMISSIONS</a>
+						<a href="?option=addproblem">CREATE</a>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="dropbtn">ACCOUNT</button>
+					<div class="dropdown-content">
+						<a href="?option=account">PROFILE</a>
+						<a href="?option=logout">LOGOUT</a>
+					</div>
+				</div>
+				<?php
+			}
+			else if ($_SESSION['permission'] == 2) {
+				// ADMIN
+				?>
+				<div class="dropdown">
+					<button class="dropbtn">USERS</button>
+					<div class="dropdown-content">
+						<a href="?option=list">LIST</a>
+						<a href="?option=ranking">RANKING</a>
+						<a href="?option=search">SEARCH</a>
+						<a href="?option=edit">UPDATE</a>
+						<a href="?option=remove">REMOVE</a>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="dropbtn">PROBLEMS</button>
+					<div class="dropdown-content">
+						<a href="?option=problems">LIST</a>
+						<a href="?option=submit">SUBMIT</a>
+						<a href="?option=submissions">SUBMISSIONS</a>
+						<a href="?option=addproblem">CREATE</a>
+						<a href="?option=delproblem">REMOVE</a>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="dropbtn">ACCOUNT</button>
+					<div class="dropdown-content">
+						<a href="?option=account">PROFILE</a>
+						<a href="?option=logout">LOGOUT</a>
+					</div>
+				</div>
+				<?php
+			}
+		}
+		else {
+			// NOT LOGGED IN
+			?>
+			<div class="dropdown">
+				<button class="dropbtn">USERS</button>
+				<div class="dropdown-content">
+					<a href="?option=list">LIST</a>
+					<a href="?option=ranking">RANKING</a>
+					<a href="?option=search">SEARCH</a>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">PROBLEMS</button>
+				<div class="dropdown-content">
+					<a href="?option=problems">LIST</a>
+					<a href="?option=submissions">SUBMISSIONS</a>
+				</div>
+			</div>
+			<?php
+		}
 	?>
+
 </nav>
 
 <?php
@@ -87,6 +198,9 @@
 				break;
 			case "addproblem":
 				include("addproblem.php");
+				break;
+			case "delproblem":
+				include("delproblem.php");
 				break;
 			case "login":
 				include("login.php");

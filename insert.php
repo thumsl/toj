@@ -53,7 +53,7 @@
 	<?php
 		if(isset($_POST['submit'])) {
 			if ($_POST['name'] != "" && $_POST['email'] != "" && $_POST['password'] != "") { 
-				$select3 = "SELECT * FROM usuarios WHERE email = UPPER('" . $_POST['email'] . "')";
+				$select3 = "SELECT * FROM users WHERE UPPER(email) = UPPER('" . $_POST['email'] . "')";
 				$result = pg_query($con, $select3);
 				if (pg_num_rows($result) > 0) {
 					echo "<i>" . $_POST['email'] . "</i> is already registered.<br>";
