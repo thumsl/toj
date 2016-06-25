@@ -18,6 +18,7 @@
 
 <body>
 
+<h2>Alter user's permission</h2>
 <section>
 <form id="edit" method="post">
 	<label for="email">E-mail</label>

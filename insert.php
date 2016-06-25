@@ -18,6 +18,7 @@
 
 <body>
 
+<h2>Register</h2>
 <section>
 <form id="register" method="post">
 	<label for="name">Nome</label>

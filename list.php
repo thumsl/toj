@@ -8,11 +8,12 @@
 
 <html>
 <head>
-	<title>List</title>
+	<title>User List</title>
 </head>
 
 <body>
 
+<h2>User List</h2>
 <section>
 <table style="width:100%">
 <tr>

@@ -31,6 +31,7 @@
 <html>
 <head>
 	<title>Online Judge</title>
+	<meta name=viewport content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>
 </head>
@@ -39,11 +40,11 @@
 
 <?php
 	if ($_SESSION['logged'] == 0) {
-		$session_status = "Login";
+		$session_status = "LOGIN";
 		$action = "login";
 	}
 	else {
-		$session_status = "Logout";
+		$session_status = "LOGOUT";
 		$action = "logout";
 	}
 ?>
@@ -52,7 +53,7 @@
 	<a href="?option=<?php echo $action; ?>"><?php echo $session_status; ?></a>
 	<?php 
 		if ($_SESSION['logged'] == 0)
-			echo "<a href='?option=insert'>Register</a>";
+			echo "<a href='?option=insert'>REGISTER</a>";
 	?>
 </header>
 
@@ -158,7 +159,7 @@
 				<button class="dropbtn">USERS</button>
 				<div class="dropdown-content">
 					<a href="?option=list">LIST</a>
-					<a href="?option=ranking">RANKING</a>
+					<a href="?option=ranking">RANKINGS</a>
 					<a href="?option=search">SEARCH</a>
 				</div>
 			</div>
@@ -213,6 +214,9 @@
 				break;
 			case "edit":
 				include("edit.php");
+				break;
+			case "ranking":
+				include("ranking.php");
 				break;
 			default:
 				include("home.php");

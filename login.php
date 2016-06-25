@@ -21,6 +21,7 @@
 
 <body>
 
+<h2>Login</h2>
 <section>
 <form id="login" method="post">
 	<label for="email">E-mail</label>

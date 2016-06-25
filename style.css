@@ -4,22 +4,26 @@ body {
 	font-family: 'Roboto Condensed', sans-serif;
 }
 header {
-	font-size: 11px;
-	width: 1000px;
-	height: auto;
-	margin: 0 auto;
 	position: fixed;
+	right:2px;
 }
 header a {
-	float: right;
-	margin-right: 3px;
+	text-decoration: inherit;
+	font-size: 12px;
+	float:right;
+	padding-top: 5px;
+	padding-right: 50px;
 }
+header a:link {color: black;}      /* unvisited link */
+header a:visited {color: black;}   /* visited link */
+header a:hover {color: black;}     /* mouse over link */
+header a:active {color: black;}    /* selected link */
 nav {
 	background: #EAEAEA;
 	text-transform: uppercase;
 	font-size:16px;
 	text-align: center;
-	width: 1000px;
+	max-width: 1000px;
 	height: 30px;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -35,9 +39,21 @@ footer {
 	text-align: center;
 	font-size: 14px;
 }
+h1 {
+	margin: 0 auto; 
+	padding-top: 20;
+	padding-bottom: 10;
+	text-align: center;
+}
+h2 {
+	text-align: center;
+	margin: 0;
+	padding-bottom: 10px;
+	font-size: 16px;
+}
 nav a {margin: 5 5; text-decoration: none; color: blue; margin-right: 10px;}
 nav a:hover {font-weight: bold;}
-section {width: 1000px; weight: auto; margin: 0 auto;}
+section {max-width: 1000px; weight: auto; margin: 0 auto;}
 section table {width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;}
 section td {border-bottom: 1px solid #ddd}
 section td a {display: block;   text-decoration: inherit; color:#000;}
@@ -45,15 +61,14 @@ section tr:nth-child(even) {background-color: #f2f2f2; }
 section tr:hover {background-color: #3385ff}
 section th {background-color: #3366ff; color: #fff; text-decoration: none;}
 section th a { text-decoration: inherit; color: #fff;}
-section form {width: 832px;	height: auto; margin: 20 auto;}
-section label {display: inline-block; width: 240px; text-align: left; margin: 0 10px 5px 0;}
-section input {width: 560px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA;font-weight: bold}
+section form {width: 400px;	height: auto; margin: 0 auto;}
+section label {display: inline-block; min-width: 100px; text-align: left; margin: 0 10px 5px 0;}
+section input {display: inline-block; min-width: 200px; float: right; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA;font-weight: bold}
 section input:focus {outline: none; background-color: #FFF;}
-section select {width: 560px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA; font-weight: bold}
-section button {display: inline-block; width: 100px; heigth: auto; float:right; margin-top: 10px; margin-right:20px;}
-section textarea {margin: 10 10 10 0; padding-right: 100; width: 560px; height: 300px;}
-legend {width: 100%; text-align: center; font-size: 14px;}
-h1 {margin: 0 auto; padding:5 5; text-align: center;}
+section select {display: inline-block; min-width: 200px; float:right; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA; font-weight: bold}
+section textarea {display: block; width: 100%; min-height: 300px; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA;font-weight: bold; margin-bottom: 10;}
+section button {display: inline-block; width: auto; float: right; height: auto; margin-top: 10;}
+legend {max-width: 100%; text-align: center; font-size: 14px;}
 p {margin: 0px; padding:0px; text-align: right;}
 article {width: 700px; height: 100px; border: 1px dashed black; padding:0px; margin: 0 auto;}
 
@@ -64,6 +79,8 @@ article {width: 700px; height: 100px; border: 1px dashed black; padding:0px; mar
     font-size: 16px;
     border: none;
     cursor: pointer;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 /* The container <div> - needed to position the dropdown content */

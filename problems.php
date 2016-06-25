@@ -13,17 +13,7 @@
 
 <body>
 
-<script>
-	function toggle() {
-		if( document.getElementById("hidden").style.display=='none' ){
-			document.getElementById("hidden").style.display = 'table-row'; // set to table-row instead of an empty string
-		}
-		else{
-			document.getElementById("hidden").style.display = 'none';
-		}
-	}
-</script>
-
+<h2>Problem listing</h2>
 <section>
 <?php
 	switch($_GET['sort']) {

@@ -18,6 +18,7 @@
 
 <body>
 
+<h2>Remove user</h2>
 <section>
 <form id="delete" method="post">
 	<label for="email">E-mail</label>

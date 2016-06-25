@@ -19,6 +19,7 @@
 
 <body>
 
+<h2>My account</h2>
 <section>
 	<?php
 		echo "Your account's permission level is ".$_SESSION['permission']."<br>";

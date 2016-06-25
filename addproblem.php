@@ -17,7 +17,7 @@
 </head>
 
 <body>
-
+<h2>Create Problem</h2>
 <section>
 <form id="addproblem" method="post" enctype="multipart/form-data">
 	<label for="title">Title</label>
