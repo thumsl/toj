@@ -12,8 +12,8 @@
 </header>
 
 <body>
-<legend>
+<section>
 	Content here, soon.
-</legend>
+</section>
 </body>
 </html>

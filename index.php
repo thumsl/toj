@@ -84,7 +84,7 @@
 				<div class="dropdown">
 					<button class="dropbtn">ACCOUNT</button>
 					<div class="dropdown-content">
-						<a href="?option=account">PROFILE</a>
+						<a href="?option=profile&id=<?php echo$_SESSION['id'] ?>">PROFILE</a>
 						<a href="?option=logout">LOGOUT</a>
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 				<div class="dropdown">
 					<button class="dropbtn">ACCOUNT</button>
 					<div class="dropdown-content">
-						<a href="?option=account">PROFILE</a>
+						<a href="?option=profile&id=<?php echo$_SESSION['id'] ?>">PROFILE</a>
 						<a href="?option=logout">LOGOUT</a>
 					</div>
 				</div>
@@ -145,7 +145,7 @@
 				<div class="dropdown">
 					<button class="dropbtn">ACCOUNT</button>
 					<div class="dropdown-content">
-						<a href="?option=account">PROFILE</a>
+						<a href="?option=profile&id=<?php echo$_SESSION['id'] ?>">PROFILE</a>
 						<a href="?option=logout">LOGOUT</a>
 					</div>
 				</div>
@@ -194,9 +194,6 @@
 			case "problems":
 				include("problems.php");
 				break;
-			case "account":
-				include("account.php");
-				break;
 			case "addproblem":
 				include("addproblem.php");
 				break;
@@ -217,6 +214,9 @@
 				break;
 			case "ranking":
 				include("ranking.php");
+				break;
+			case "profile":
+				include ("profile.php");
 				break;
 			default:
 				include("home.php");

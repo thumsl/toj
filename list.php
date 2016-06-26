@@ -24,18 +24,18 @@
 </tr>
 
 <?php
-	$query = "SELECT users.name, users.email, university.name, country.code, country.name, university.abbrev FROM users, country, university WHERE fk_uni = university.id AND fk_country = country.id ORDER BY users.name;";
+	$query = "SELECT users.id, users.name, users.email, university.name, country.code, country.name, university.abbrev FROM users, country, university WHERE fk_uni = university.id AND fk_country = country.id ORDER BY users.name;";
 	$result = pg_query($con, $query);
 	if (!$result) {
 		echo "An error occurred.\n";
 		exit;
 	}
-
 	while ($row = pg_fetch_row($result)) {
-		echo 	"<tr><td>$row[0]</td>
-				 <td>$row[1]</td>
-				 <td>$row[2] ($row[5])</td>
-				 <td><img src='images/flags/".$row[3].".png' alt='".$row[4]."' style='width:24px;height:24px;'></td>";
+		$url = "?option=profile&id=".$row[0];
+		echo 	"<tr><td><a href='$url'>$row[1]</a></td>
+				 <td><a href='$url'>$row[2]</a></td>
+				 <td><a href='$url'>$row[3] ($row[6])</a></td>
+				 <td><a href='$url'><img src='images/flags/".$row[4].".png' alt='".$row[5]."' style='width:24px;height:24px;'></a></td>";
 	}
 	echo "</tr>";
 ?>

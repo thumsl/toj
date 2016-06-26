@@ -48,9 +48,9 @@
 		<option value="10">10</option>
 	</select>
 	<label for="inputFile">Input File</label>
-	<input type="file" name="inputFile" ID="inputFile">
+	<input type="file" name="inputFile" ID="inputFile" class="inputfile">
 	<label for="outputFile">Output File</label>
-	<input type="file" name="outputFile" ID="outputFile">
+	<input type="file" name="outputFile" ID="outputFile" class="inputfile">
 	<button type="submit" form="addproblem" name="submit" value="submit">Create</button>
 </form>
 

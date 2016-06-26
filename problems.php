@@ -19,27 +19,27 @@
 	switch($_GET['sort']) {
 		case "problem":
 			if ($_GET['order'] == 'asc')
-				$sort = "problems.name ASC";
+				$sort = "S.name ASC";
 			else
-				$sort = "problems.name DESC";
+				$sort = "S.name DESC";
 			break;
 		case "category":
 			if ($_GET['order'] == 'asc')
-				$sort = "problemType.name ASC";
+				$sort = "S.category ASC";
 			else
-				$sort = "problemType.name DESC";
+				$sort = "S.category DESC";
 			break;
 		case "author":
 			if ($_GET['order'] == 'asc')
-				$sort = "users.name ASC";
+				$sort = "S.userName ASC";
 			else
-				$sort = "users.name DESC";
+				$sort = "S.userName DESC";
 			break;
 		case "level":
 			if ($_GET['order'] == 'asc')
-				$sort = "problems.level ASC";
+				$sort = "S.level ASC";
 			else
-				$sort = "problems.level DESC";
+				$sort = "S.level DESC";
 			break;
 		case "solved":
 			if ($_GET['order'] == 'asc')
@@ -48,15 +48,27 @@
 				$sort = "solved DESC";
 			break;
 		default:
-			$sort = "problems.name DESC";
+			$sort = "S.name DESC";
 			break;
 	}
 	$query = "
-		SELECT problems.id, problems.name, problemType.name, users.name, problems.level, count(solutions.fk_problem) as solved
-		FROM problems LEFT OUTER JOIN solutions ON (problems.id = solutions.fk_problem), users, problemType
-		WHERE problems.fk_type = problemType.id AND problems.fk_user = users.id
-		GROUP BY problems.id, problems.name, problems.level, users.name, problemType.name
-		ORDER BY ".$sort.";";
+		SELECT S.id, S.name, S.category, S.userName, S.level, COUNT(s.id) as solved 
+		FROM (
+			SELECT DISTINCT ON (solutions.fk_user, solutions.fk_problem)
+				problems.id, problems.name, problemType.name as category, users.name as userName, problems.level
+				FROM
+					problems INNER JOIN solutions ON (problems.id = solutions.fk_problem), users, problemType
+				WHERE
+					problemType.id = problems.fk_type AND users.id = problems.fk_user
+				GROUP BY
+					problems.id, problems.name, problemType.name, users.name, problems.level, solutions.fk_user, solutions.fk_problem, solutions.fK_status
+				HAVING solutions.fK_status = 1)
+		as S
+		GROUP BY
+			S.id, S.name, S.category, S.userName, S.level
+		ORDER BY
+			".$sort.";";
+
 	$result = pg_query($con, $query);
 	if (!$result) {
 		echo "An error occurred.\n";
