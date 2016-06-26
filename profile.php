@@ -29,13 +29,13 @@
 		header("Location: ?option=home");
 	else {
 		$select = "
-		SELECT
-		users.name, users.email, university.name, university.abbrev, country.name, COUNT(CASE WHEN S.fk_status = 1 THEN 1 ELSE NULL END) as SOLVED, COUNT(DISTINCT(S.fk_problem)) as TRIED
+		SELECT users.name, users.email, university.name, university.abbrev, country.name, COUNT(CASE WHEN S.fk_status = 1 THEN 1 ELSE NULL END) as SOLVED, COUNT(DISTINCT(S.fk_problem)) as TRIED, users.registrationDate
 		FROM users, university, country, 
-			(SELECT DISTINCT ON (solutions.fk_user, solutions.fk_problem, fk_status) fk_status, fk_problem FROM solutions WHERE solutions.fk_user = ".$_GET['id']."
-			GROUP BY solutions.id, solutions.fk_user, solutions.fk_problem, solutions.fK_status) as S
-		WHERE users.id = ".$_GET['id']." AND users.fk_uni = university.id AND users.fk_country = country.id
-		GROUP BY users.name, users.email, university.name, university.abbrev, country.name;";
+			(SELECT DISTINCT ON (solutions.fk_user, solutions.fk_problem, solutions.fk_status, users.id) fk_status, fk_problem, users.id
+			FROM users FULL JOIN solutions ON (users.id = solutions.fk_user)) as S
+		WHERE users.id = S.id AND S.id = ".$_GET['id']." AND users.fk_uni = university.id AND users.fk_country = country.id 
+		GROUP BY users.name, users.email, university.name, university.abbrev, country.name, users.registrationDate;";
+
 		$result = pg_query($con, $select);
 
 		if (!$result) {
@@ -54,13 +54,13 @@
 					$row[2] ($row[3])<br>
 					<small>$row[1]</small><br>
 					<hr>
-					<b>Member since:</b> $date<br>
+					<b>Member since:</b> $row[7]<br>
 					<b>Problems solved:</b> $row[5]<br>
 					<b>Problems tried:</b> $row[6]<br>
 					</div>
-					</section>
-					<footer>$select</footer>";
+					</section>";
 			}
+			echo "<footer>$select</footer>";
 		}
 	}
 ?>

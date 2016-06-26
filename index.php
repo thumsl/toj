@@ -218,6 +218,9 @@
 			case "profile":
 				include ("profile.php");
 				break;
+			case "search":
+				include ("search.php");
+				break;
 			default:
 				include("home.php");
 				break;

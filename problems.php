@@ -52,20 +52,14 @@
 			break;
 	}
 	$query = "
-		SELECT S.id, S.name, S.category, S.userName, S.level, COUNT(s.id) as solved 
+		SELECT S.id, S.name, problemType.name, users.name, S.level, COUNT(CASE WHEN S.fk_status = 1 THEN 1 ELSE NULL END) as SOLVED 
 		FROM (
-			SELECT DISTINCT ON (solutions.fk_user, solutions.fk_problem)
-				problems.id, problems.name, problemType.name as category, users.name as userName, problems.level
-				FROM
-					problems INNER JOIN solutions ON (problems.id = solutions.fk_problem), users, problemType
-				WHERE
-					problemType.id = problems.fk_type AND users.id = problems.fk_user
-				GROUP BY
-					problems.id, problems.name, problemType.name, users.name, problems.level, solutions.fk_user, solutions.fk_problem, solutions.fK_status
-				HAVING solutions.fK_status = 1)
-		as S
+			SELECT DISTINCT ON (solutions.fk_user, solutions.fk_problem, solutions.fk_status, problems.id) fk_status, problems.id, problems.name, problems.fk_type, problems.level, problems.fk_user
+			FROM problems FULL JOIN solutions ON (problems.id = solutions.fk_problem)) as S, problemType, users
+		WHERE
+			problemType.id = S.fk_type AND S.fk_user = users.id
 		GROUP BY
-			S.id, S.name, S.category, S.userName, S.level
+			S.id, S.name, problemType.name, users.name, S.level
 		ORDER BY
 			".$sort.";";
 

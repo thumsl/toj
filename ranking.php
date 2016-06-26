@@ -42,9 +42,10 @@
 	}
 
 	while ($row = pg_fetch_row($result)) {
-		echo 	"<tr><td>$row[1]</td>
-				 <td>$row[2] ($row[3])</td>
-				 <td>$row[4]</td>";
+		$url = "?option=profile&id=".$row[0];
+		echo 	"<tr><td><a href = '$url'>$row[1]</a></td>
+				 <td><a href = '$url'>$row[2] ($row[3])</a></td>
+				 <td><a href = '$url'>$row[4]</a></td>";
 	}
 	echo "</tr>";
 ?>

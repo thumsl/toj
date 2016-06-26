@@ -30,7 +30,7 @@ nav {
 	border-radius: 4px;
 	line-height: 30px;
 }
-nav a {margin: 5 5; text-decoration: none; color: blue; margin-right: 10px;}
+nav a {text-decoration: none; color: blue;}
 nav a:hover {font-weight: bold;}
 
 footer {
@@ -59,6 +59,11 @@ section {
 	max-width: 1000px; 
 	weight: auto;
 	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 section table {width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;}
 section td {border-bottom: 1px solid #ddd}
@@ -67,7 +72,17 @@ section tr:nth-child(even) {background-color: #f2f2f2; }
 section tr:hover {background-color: #3385ff}
 section th {background-color: #3366ff; color: #fff; text-decoration: none;}
 section th a { text-decoration: inherit; color: #fff;}
-section form {width: 100%; margin: 0 auto; height: auto; overflow: auto;}
+section form {
+	width: 100%;
+	margin: 0 auto;
+	height: auto;
+	overflow: auto;
+	padding-left: 30px;
+	padding-right: 30px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
 section label {display: inline-block; width: 25%; float:left; margin-bottom: 10;}
 section input {display: inline-block; width: 70%; height: auto; float: right; border: 1px solid #3366ff; border-radius: 2px; background-color: #EAEAEA; margin-bottom: 10;}
 section input:focus {outline: none; background-color: #FFF;}
@@ -79,7 +94,7 @@ section button {display:inline-block; width:35%; height: auto; float:right; marg
 	width: 10px;
 }
 
-legend {max-width: 100%; text-align: center; font-size: 14px;}
+legend {max-width: 100%; text-alig`n: center; font-size: 14px;}
 p {margin: 0px; padding:0px; text-align: right;}
 article {width: 700px; height: 100px; border: 1px dashed black; padding:0px; margin: 0 auto;}
 
@@ -90,8 +105,8 @@ article {width: 700px; height: 100px; border: 1px dashed black; padding:0px; mar
     font-size: 16px;
     border: none;
     cursor: pointer;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 /* The container <div> - needed to position the dropdown content */

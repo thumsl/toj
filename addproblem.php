@@ -102,11 +102,16 @@
 					// creates the html file for the problem
 					$file_name = $dir."/".$id.".html";
 					$file = fopen($file_name, "w");
-					$autor_query = "SELECT nome FROM usuarios WHERE \"codUser\" = ".$_SESSION['id'];
-					$autor  = pg_fetch_row(pg_query($con, $autor_query))[0];
-					$content = "<article><h1>".$_POST['title']."</h1><br><p><small>".$autor."</p></small><br>".$_POST['descricao']."</article>";
+					$select = "SELECT  users.name, users.email FROM users WHERE users.id = ".$_SESSION['id'];
+					$result = pg_query($con, $select);
+					if (!$result) {
+						echo "Something bad happened. Please try again later.<br>";
+						exit(1);
+					}
+					$row  = pg_fetch_row($result);
+					$content = "<section><h2>".$_POST['title']."</h2><br><small style='float: right;'><a href = '?option=profile&id=".$_SESSION['id']."'>".$row[0].", ".$row[1]."</a></small><br>".$_POST['descricao']."</section>";
 					fwrite($file, $content);
-					echo "<b>Problema criado com sucesso.</b><br>";
+					echo "<a href='?problem=".$id."'>Done. Click here to see your new problem.</a>";
 				}
 				else {
 					echo "There was a problem adding the problem to the database, please try again later.<br>";
@@ -117,7 +122,7 @@
 				echo "Please fill all required fields correctly.<br>";
 				exit(1);
 			}
-			echo "</legend></section><footer>$query</footer>";
+			echo "</legend></section><footer>$query<br>$select</footer>";
 		}
 	?>
 

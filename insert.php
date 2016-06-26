@@ -62,7 +62,7 @@
 				else {
 					$id = mt_rand(0, 2147483647);
 					$hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-					$insert = "INSERT INTO users VALUES (".$id.", '".$_POST['name']."', '".$_POST['email']."', '".$hash."', ".$_POST['country'].", ".$_POST['universidade'].", 0);"; //".$_POST['universidade']."
+					$insert = "INSERT INTO users VALUES (".$id.", '".$_POST['name']."', '".$_POST['email']."', '".$hash."', ".$_POST['country'].", ".$_POST['universidade'].", 0, now());"; //".$_POST['universidade']."
 
 					$result = pg_query($con, $insert);
 
